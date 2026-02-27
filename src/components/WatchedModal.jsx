@@ -1,17 +1,16 @@
 import { FIELDS } from "../constants";
+import { FaCheckCircle } from "react-icons/fa";
 
-const WatchedModal = ({ watched = [], onClose, onRemove }) => {
+const WatchedModal = ({ watched = [], onClose }) => {
   return (
     <dialog open className="modal">
       <div className="modal-box max-w-2xl">
         <div className="flex items-start justify-between gap-4">
-          <h3 className="font-bold text-lg">Watched</h3>
-          <button
-            className="btn btn-sm btn-ghost"
-            onClick={onClose}
-            aria-label="Close"
-            type="button"
-          >
+          <div className="flex items-center gap-2">
+            <FaCheckCircle />
+            <h3 className="font-bold text-lg">Watched</h3>
+          </div>
+          <button className="btn btn-sm btn-ghost" onClick={onClose} aria-label="Close" type="button">
             ✕
           </button>
         </div>
@@ -29,21 +28,11 @@ const WatchedModal = ({ watched = [], onClose, onRemove }) => {
                   <p className="font-semibold truncate">{movie?.[FIELDS.TITLE]}</p>
                   <p className="text-sm opacity-70">
                     {movie?.[FIELDS.YEAR]}
-                    {movie?.[FIELDS.GENRE]
-                      ? ` • ${String(movie[FIELDS.GENRE]).toUpperCase()}`
-                      : ""}
+                    {movie?.[FIELDS.GENRE] ? ` • ${String(movie[FIELDS.GENRE]).toUpperCase()}` : ""}
                   </p>
                 </div>
 
-                {onRemove && (
-                  <button
-                    className="btn btn-sm btn-outline btn-error shrink-0"
-                    onClick={() => onRemove(movie)}
-                    type="button"
-                  >
-                    Remove
-                  </button>
-                )}
+                <span className="badge badge-success">WATCHED</span>
               </div>
             ))
           )}

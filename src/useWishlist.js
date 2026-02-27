@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { downloadWishlist } from "./downloadWishlist";
 import { FIELDS } from "./constants";
+import { toast } from "react-toastify";
 
 const useWishlist = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -21,10 +22,13 @@ const useWishlist = () => {
     const key = getKey(movie);
     if (!key) return;
 
-    setWishlist((prev) => {
-      if (prev.some((m) => getKey(m) === key)) return prev;
-      return [...prev, movie];
-    });
+    if (wishlistKeys.has(key)) {
+      toast.info(`Already in wishlist: ${key}`);
+      return;
+    }
+
+    setWishlist((prev) => [...prev, movie]);
+    toast.success(`Added to wishlist: ${key}`);
   };
 
   const removeFromWishlist = (movie) => {
@@ -32,21 +36,32 @@ const useWishlist = () => {
     if (!key) return;
 
     setWishlist((prev) => prev.filter((m) => getKey(m) !== key));
+    toast.info(`Removed from wishlist: ${key}`);
   };
 
   const addToWatched = (movie) => {
     const key = getKey(movie);
     if (!key) return;
 
-    setWatched((prev) => {
-      if (prev.some((m) => getKey(m) === key)) return prev;
-      return [...prev, movie];
-    });
+    if (watchedKeys.has(key)) {
+      toast.info(`Already watched: ${key}`);
+      return;
+    }
 
+    setWatched((prev) => [...prev, movie]);
     setWishlist((prev) => prev.filter((m) => getKey(m) !== key));
+
+    toast.success(`Marked watched: ${key}`);
   };
 
-  const handleDownload = () => downloadWishlist(wishlist);
+  const handleDownload = () => {
+    if (!wishlist.length) {
+      toast.warn("Wishlist is empty. Add movies before downloading.");
+      return;
+    }
+    downloadWishlist(wishlist);
+    toast.success("Downloaded wishlist.pdf");
+  };
 
   return {
     wishlist,
@@ -55,7 +70,6 @@ const useWishlist = () => {
     removeFromWishlist,
     addToWatched,
     handleDownload,
-
     isInWishlist: (movie) => wishlistKeys.has(getKey(movie)),
     isWatched: (movie) => watchedKeys.has(getKey(movie)),
   };

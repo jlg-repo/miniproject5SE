@@ -1,4 +1,5 @@
 import { FIELDS } from "../constants";
+import { FaTrash, FaDownload } from "react-icons/fa";
 
 const WishlistModal = ({ wishlist = [], onRemove, onDownload, onClose }) => {
   return (
@@ -6,7 +7,7 @@ const WishlistModal = ({ wishlist = [], onRemove, onDownload, onClose }) => {
       <div className="modal-box max-w-2xl">
         <div className="flex items-start justify-between gap-4">
           <h3 className="font-bold text-lg">Wishlist</h3>
-          <button className="btn btn-sm btn-ghost" onClick={onClose} aria-label="Close">
+          <button className="btn btn-sm btn-ghost" onClick={onClose} aria-label="Close" type="button">
             ✕
           </button>
         </div>
@@ -31,7 +32,9 @@ const WishlistModal = ({ wishlist = [], onRemove, onDownload, onClose }) => {
                 <button
                   className="btn btn-sm btn-outline btn-error shrink-0"
                   onClick={() => onRemove(movie)}
+                  type="button"
                 >
+                  <FaTrash />
                   Remove
                 </button>
               </div>
@@ -40,18 +43,26 @@ const WishlistModal = ({ wishlist = [], onRemove, onDownload, onClose }) => {
         </div>
 
         <div className="modal-action mt-6 flex items-center justify-between">
-          <button className="btn btn-outline" onClick={onClose}>
+          <button className="btn btn-outline" onClick={onClose} type="button">
             Close
           </button>
 
-          <button className="btn btn-primary" onClick={onDownload} disabled={!wishlist.length}>
+          <button
+            className="btn btn-primary"
+            onClick={onDownload}
+            disabled={!wishlist.length}
+            type="button"
+          >
+            <FaDownload />
             Download PDF
           </button>
         </div>
       </div>
 
       <form method="dialog" className="modal-backdrop">
-        <button onClick={onClose}>close</button>
+        <button onClick={onClose} type="button">
+          close
+        </button>
       </form>
     </dialog>
   );

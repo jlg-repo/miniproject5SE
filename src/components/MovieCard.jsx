@@ -1,4 +1,5 @@
 import { FIELDS } from "../constants";
+import { FaHeart, FaRegHeart, FaCheck, FaTrash } from "react-icons/fa";
 import LikeDislike from "./LikeDislike";
 
 const MovieCard = ({ movie, actions }) => {
@@ -30,11 +31,7 @@ const MovieCard = ({ movie, actions }) => {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {genre && (
-            <span className="badge badge-primary">
-              {String(genre).toUpperCase()}
-            </span>
-          )}
+          {genre && <span className="badge badge-primary">{String(genre).toUpperCase()}</span>}
           {age && <span className="badge badge-outline">{age}</span>}
           {watched && <span className="badge badge-success">WATCHED</span>}
         </div>
@@ -47,17 +44,13 @@ const MovieCard = ({ movie, actions }) => {
 
         <div className="mt-3 flex flex-wrap gap-2">
           {!inWishlist ? (
-            <button
-              className="btn btn-sm btn-primary"
-              onClick={() => actions?.addToWishlist?.(movie)}
-            >
-              Add to wishlist
+            <button className="btn btn-sm btn-primary" onClick={() => actions?.addToWishlist?.(movie)}>
+              <FaRegHeart />
+              Wishlist
             </button>
           ) : (
-            <button
-              className="btn btn-sm btn-outline btn-error"
-              onClick={() => actions?.removeFromWishlist?.(movie)}
-            >
+            <button className="btn btn-sm btn-outline btn-error" onClick={() => actions?.removeFromWishlist?.(movie)}>
+              <FaTrash />
               Remove
             </button>
           )}
@@ -68,6 +61,7 @@ const MovieCard = ({ movie, actions }) => {
             disabled={watched}
             title={watched ? "Already watched" : ""}
           >
+            <FaCheck />
             Mark watched
           </button>
         </div>
