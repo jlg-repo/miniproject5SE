@@ -8,6 +8,8 @@ Displays a set of movies from a local JSON file named "movie.json". Users can fi
 - Wishlist: add/remove movies
 - Mark movies as watched
 - Download wishlist as a PDF
+- Watched List
+- Like and Dislike functionality
 
 - React
 - Tailwind CSS + DaisyUI (for UI styling)
