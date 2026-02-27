@@ -1,31 +1,60 @@
-const Navbar = ({ wishlistCount, watchedCount, onWishlistClick }) => {
+import icon from "../assets/icon.png";
+
+const Navbar = ({
+  wishlistCount = 0,
+  watchedCount = 0,
+  onOpenWishlist,
+  onOpenWatched,
+}) => {
   return (
-    <div className="navbar bg-base-100 shadow-md px-4">
-      {/*Tailwind implementation of a navbar with a title on the left and two buttons on the right.*/}
-      {/* Left — title and icon */}
-      <div className="flex-1">
-        <span className="text-xl font-bold">🎬 CineLog</span>
+    <header className="sticky top-0 z-50 w-full">
+      <div className="bg-base-100/90 backdrop-blur supports-[backdrop-filter]:bg-base-100/70 px-0 py-2">
+        <div className="rounded-2xl bg-base-100 shadow-sm border border-base-200">
+          <div className="navbar px-4 sm:px-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-3">
+                <img
+                  src={icon}
+                  alt="MovieMango icon"
+                  className="w-9 h-9 rounded-xl"
+                />
+                <div className="leading-tight">
+                  <div className="text-xl font-bold">MovieMango</div>
+                  <div className="text-xs opacity-70">
+                    Browse • Filter • Wishlist • Watched
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <nav className="flex-none">
+              <div className="flex items-center gap-2">
+                <button
+                  className="btn btn-sm btn-outline"
+                  onClick={onOpenWatched}
+                  type="button"
+                >
+                  Watched
+                  <span className="badge badge-neutral ml-2">{watchedCount}</span>
+                </button>
+
+                <button
+                  className="btn btn-sm btn-outline"
+                  onClick={onOpenWishlist}
+                  type="button"
+                >
+                  Wishlist
+                  <span className="badge badge-neutral ml-2">{wishlistCount}</span>
+                </button>
+              </div>
+            </nav>
+          </div>
+
+          <div className="h-px bg-base-200" />
+        </div>
       </div>
+    </header>
+  );
+};
 
-      {/* Right — buttons */}
-      <div className="flex gap-2">
-        <button className="btn btn-ghost" onClick={onWishlistClick}>
-          Wishlist
-          {wishlistCount > 0 && (
-            <span className="badge badge-primary">{wishlistCount}</span>
-          )}
-        </button>
-
-        <button className="btn btn-ghost">
-          Watched
-          {watchedCount > 0 && (
-            <span className="badge badge-secondary">{watchedCount}</span>
-          )}
-        </button>
-      </div>
-
-    </div>
-  )
-}
-
-export default Navbar
+export default Navbar;

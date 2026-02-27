@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useMemo, useState } from "react";
 import useMovies from "./hooks/useMovies";
 import useWishlist from "./useWishlist";
@@ -6,12 +7,16 @@ import MovieGrid from "./components/MovieGrid";
 import FilterBar from "./components/FilterBar";
 import SortControls from "./components/SortControls";
 import WishlistModal from "./components/WishlistModal";
+import WatchedModal from "./components/WatchedModal";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { filterMovies, sortMovies } from "./filterSort";
 
 function App() {
   const { movies, loading, error } = useMovies();
   const {
     wishlist,
+    watched,
     addToWishlist,
     removeFromWishlist,
     addToWatched,
@@ -23,6 +28,7 @@ function App() {
   const [filters, setFilters] = useState({ genre: "", ageGroup: "", year: "" });
   const [sortBy, setSortBy] = useState("year-desc");
   const [showWishlist, setShowWishlist] = useState(false);
+  const [showWatched, setShowWatched] = useState(false);
 
   const visibleMovies = useMemo(() => {
     const filtered = filterMovies(movies, filters);
@@ -34,15 +40,16 @@ function App() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 space-y-4">
+      <Navbar
+        wishlistCount={wishlist.length}
+        watchedCount={watched.length}
+        onOpenWishlist={() => setShowWishlist(true)}
+        onOpenWatched={() => setShowWatched(true)}
+      />
+
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <FilterBar filters={filters} onChange={setFilters} />
-
-        <div className="flex items-end gap-3">
-          <SortControls value={sortBy} onChange={setSortBy} />
-          <button className="btn btn-outline" onClick={() => setShowWishlist(true)}>
-            Wishlist ({wishlist.length})
-          </button>
-        </div>
+        <SortControls value={sortBy} onChange={setSortBy} />
       </div>
 
       <MovieGrid
@@ -64,6 +71,12 @@ function App() {
           onClose={() => setShowWishlist(false)}
         />
       )}
+
+      {showWatched && (
+        <WatchedModal watched={watched} onClose={() => setShowWatched(false)} />
+      )}
+
+      <Footer />
     </div>
   );
 }

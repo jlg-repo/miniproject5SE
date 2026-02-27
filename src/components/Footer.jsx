@@ -2,15 +2,11 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-10">
-      <div className="footer footer-center bg-base-200 text-base-content rounded-box p-6">
-        <div className="max-w-2xl">
-          <p className="font-semibold">Movie Browser</p>
-          <p className="text-sm opacity-70">
-            Browse, filter, and sort movies by genre, age rating, and IMDb score.
-          </p>
-          <p className="text-xs opacity-60 mt-2">© {year} Movie Browser</p>
-        </div>
+    <footer className="mt-10 rounded-2xl bg-base-200 text-base-content">
+      <div className="px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p className="font-semibold">MovieMango</p>
+        <p className="text-sm opacity-70">Local dataset demo • Filters • Wishlist • PDF export</p>
+        <p className="text-sm opacity-60">© {year}</p>
       </div>
     </footer>
   );
