@@ -1,28 +1,13 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import "./hooks/useMovies";
+import useMovies from "./hooks/useMovies"
+import Loader from "./components/Loader"
+import MovieGrid from "./components/MovieGrid"
 
-const App = () => {
-    {/* State vars. Many will be moved to components later. movies state has been moved*/}
-    {/*const [loading, setLoading] = useState(true);*/}
-    const[filters, setFilters] = useState({genre: '', ageGroup: '', year: ''});
-    const [sortBy, setSortBy] = useState('year-desc');
-    const [wishlist, setWishlist] = useState([]);
-    const [watched, setWatched] = useState([]);
+function App() {
+  const { movies, loading, error } = useMovies()
 
-    const {movies, loading, error } = useMovies();
-
-    return (
-        < div classname="min-h-screen flex flex-col">
-            <Navbar wishlist={wishlist} watched={watched} />
-            <main className="flex-1">
-                {/* FilterBar, SortControls, MovieGrid go here */}
-                <div>{loading ? "Loading.." : movies.length + " movies loaded"}</div>
-                </main>
-                <Footer />
-
-            </div>
-        );
+  if (loading) return <Loader />
+  if (error) return <p>{error}</p>
+  return <MovieGrid movies={movies} />
 }
 
-export default App;
+export default App

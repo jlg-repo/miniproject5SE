@@ -1,5 +1,5 @@
 import { useState, useEffect} from 'react'
-import "./public/movie.json"
+
 
 const useMovies = () => {
     const [movies, setMovies] = useState([]);
