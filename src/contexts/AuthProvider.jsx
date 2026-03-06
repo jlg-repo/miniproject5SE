@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -14,7 +13,6 @@ import { AuthContext } from "./AuthContext";
 
 const googleProvider = new GoogleAuthProvider();
 
-// passing a children prop -->
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,9 +56,7 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return unsubscribe;
   }, []);
 
   const authInfo = {
@@ -72,7 +68,12 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
   };
-  return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
+
+  return (
+    <AuthContext.Provider value={authInfo}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
