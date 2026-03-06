@@ -1,29 +1,20 @@
+import { Navigate, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import Loader from "../components/Loader";
 
 const PrivateRoute = ({ children }) => {
-    return children;
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+  }
+
+  return children;
 };
 
 export default PrivateRoute;
-
-/* 
-import { Navigate, useLocation } from "react-router";
-
-import useAuth from "../hooks/useAuth";
-
-
-  const { user, loading } = useAuth();
-  const location = useLocation();
-  console.log(location);
-
-  if (loading) {
-    return <span className="loading loading-spinner text-success"></span>;
-  }
-
-  if (user) {
-    return children;
-  }
-
-  return <Navigate state={location?.pathname} to="/login"></Navigate>;
-
-
-*/

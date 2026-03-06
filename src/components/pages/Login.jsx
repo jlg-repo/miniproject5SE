@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { createUser, signInUser, signInWithGoogle, loading } = useAuth();
+  const { signInUser, signInWithGoogle, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isRegisterMode, setIsRegisterMode] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,13 +18,9 @@ const Login = () => {
     }
 
     try {
-      if (isRegisterMode) {
-        await createUser(email, password);
-        toast.success("Account created and signed in.");
-      } else {
-        await signInUser(email, password);
-        toast.success("Signed in successfully.");
-      }
+      await signInUser(email, password);
+      toast.success("Signed in successfully.");
+      navigate(location.state?.from || "/dashboard", { replace: true });
     } catch (error) {
       toast.error(error?.message || "Authentication failed.");
     }
@@ -32,6 +30,7 @@ const Login = () => {
     try {
       await signInWithGoogle();
       toast.success("Signed in with Google.");
+      navigate(location.state?.from || "/dashboard", { replace: true });
     } catch (error) {
       toast.error(error?.message || "Google sign-in failed.");
     }
@@ -41,11 +40,9 @@ const Login = () => {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="w-full max-w-md rounded-2xl border border-base-300 bg-base-100 p-6 shadow-lg space-y-5">
         <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold">
-            {isRegisterMode ? "Create account" : "Sign in"}
-          </h1>
+          <h1 className="text-2xl font-bold">Sign in</h1>
           <p className="text-sm opacity-70">
-            Use Firebase Authentication to access MovieMango.
+            Access your movie dashboard with your account.
           </p>
         </div>
 
@@ -71,13 +68,13 @@ const Login = () => {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Enter password"
-              autoComplete={isRegisterMode ? "new-password" : "current-password"}
+              autoComplete="current-password"
               required
             />
           </label>
 
           <button className="btn btn-primary w-full" type="submit" disabled={loading}>
-            {isRegisterMode ? "Create Account" : "Sign In"}
+            Sign In
           </button>
         </form>
 
@@ -90,16 +87,14 @@ const Login = () => {
           Continue with Google
         </button>
 
-        <button
-          className="btn btn-ghost btn-sm w-full"
-          type="button"
-          onClick={() => setIsRegisterMode((prev) => !prev)}
-          disabled={loading}
-        >
-          {isRegisterMode
-            ? "Already have an account? Sign in"
-            : "Need an account? Register"}
-        </button>
+        <div className="flex gap-2">
+          <button className="btn btn-ghost btn-sm flex-1" type="button" onClick={() => navigate(-1)}>
+            Back
+          </button>
+          <Link className="btn btn-ghost btn-sm flex-1" to="/signup">
+            Need an account?
+          </Link>
+        </div>
       </div>
     </div>
   );
