@@ -1,5 +1,7 @@
 # MovieMango (Firebase Auth + Protected Routes)
 
+https://moviemangos.netlify.app/
+
 MovieMango is a React + Vite movie dashboard where users can browse films, filter/sort lists, manage wishlist/watched states, and export wishlist data to PDF.
 
 This project now includes Firebase Authentication, route protection, guest/auth-aware UI, a creative landing page, and error pages.
@@ -83,3 +85,5 @@ npm run dev
 - `npm run build` Production build
 - `npm run preview` Preview production build
 - `npm run lint` Run ESLint
+
+Built by Jason Gentile & Christopher Ritter
