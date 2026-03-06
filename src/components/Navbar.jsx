@@ -7,11 +7,6 @@ const Navbar = ({
   onOpenWishlist,
   onOpenWatched,
 }) => {
-
-  const navLinks = [
-    <NavLink to={"/"}
-    
-  ]
   return (
     <header className="sticky top-0 z-50 w-full">
       <div className="bg-base-100/90 backdrop-blur supports-[backdrop-filter]:bg-base-100/70 py-2">

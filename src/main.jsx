@@ -5,14 +5,6 @@ import App from "./App.jsx";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import RootLayout from
-import mainRouts from
-import { createBrowserRouter, RouterProvider } from
-
-
-const router =
-
-
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
