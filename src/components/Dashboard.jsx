@@ -81,4 +81,4 @@ function Dashboard() {
   );
 }
 
-export default App;
+export default Dashboard;
