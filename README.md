@@ -14,9 +14,8 @@ This project now includes Firebase Authentication, route protection, guest/auth-
 - React Toastify
 - jsPDF
 
-## Requirements Coverage
+## Requirements
 
-- Informative README: this file documents setup, routes, auth, validations, and behavior.
 - UI/UX guest vs authenticated:
   - Header badge shows `Guest` or `Authenticated`.
   - Guests see Login/Signup links.
